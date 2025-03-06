@@ -1,0 +1,39 @@
+Quiero generar una landing page moderna, visualmente atractiva y dinámica para un desarrollador inmobiliario. La página deberá tener el siguiente diseño y estructura específica:
+Barra Superior Principal:
+* Logo de la empresa alineado a la izquierda.
+* Número de teléfono de contacto y botones para redes sociales (Facebook, Instagram, YouTube, LinkedIn) ubicados en el centro.
+* A la derecha, botones para cambiar el tema (claro/oscuro) e idioma (inglés/español).
+Navbar (segunda barra superior):
+* A la izquierda, botón "Inicio" que redirija al inicio de la página.
+* A la derecha, tres botones: "Propiedades", "Industrial y Comercial" y "Contacto".
+    * Al dar clic en "Propiedades", la página hará scroll hacia la sección de productos principales.
+    * "Industrial y Comercial" llevará a otro módulo específico.
+    * "Contacto" hará scroll hacia la sección de formulario de contacto.
+Cuerpo de la página:
+Sección 1 - Bienvenida y Quiénes Somos:
+* Un slider de imágenes impactantes con textos superpuestos que expliquen brevemente quiénes son y qué hacen, destacando compromiso y crecimiento del país. 
+Sección 2 - Cards de Productos Principales:
+* Al hacer clic en el botón "Propiedades", la página hará scroll automático hacia esta sección.
+* Se mostrarán claramente 4 cards:
+    1. Propiedades
+    2. Industrial y Comercial
+    3. Residencial
+    4. Módulos Prefabricados
+* Cada card tendrá una imagen de fondo representativa y texto resaltado claramente para identificación rápida del producto.
+Sección 3 - Información Dinámica de Productos:
+* Una sección dinámica que muestre información detallada sobre los productos y propiedades ofrecidas de manera atractiva.
+* Esta sección debe incluir títulos claros, imágenes destacadas del producto y descripciones breves y atractivas.
+Sección 4 - Formulario de Contacto:
+* Formulario para potenciales clientes con campos claros como: Nombre, Email, Teléfono, Tipo de Interés (selección múltiple), y Área de Mensaje. Este formulario debe ser visualmente limpio y fácil de completar.
+Sección 5 - Footer Completo:
+* Pie de página incluyendo:
+    * Logo pequeño de la empresa
+    * Datos de contacto rápidos (dirección, teléfono, email)
+    * Íconos de redes sociales
+    * Derechos reservados con el año actual
+La landing page debe utilizar buenas prácticas UI/UX, incluyendo:
+* Animaciones sutiles
+* Diseño responsivo
+* Colores corporativos alineados al logo de la empresa
+* Buen uso de espacios en blanco
+* Tipografía moderna y legible
