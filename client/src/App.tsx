@@ -6,6 +6,7 @@ import Home from "@/pages/home";
 import NotFound from "@/pages/not-found";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./lib/i18n";
+import { ThemeProvider } from "next-themes";
 
 function Router() {
   return (
@@ -19,10 +20,12 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <I18nextProvider i18n={i18n}>
-        <Router />
-        <Toaster />
-      </I18nextProvider>
+      <ThemeProvider>
+        <I18nextProvider i18n={i18n}>
+          <Router />
+          <Toaster />
+        </I18nextProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

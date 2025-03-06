@@ -25,7 +25,7 @@ const formSchema = z.object({
 
 export default function ContactForm() {
   const { t } = useTranslation();
-  
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -43,11 +43,11 @@ export default function ContactForm() {
   };
 
   return (
-    <div id="contact" className="py-20 bg-gray-50 dark:bg-gray-900">
+    <div id="contact" className="py-24 bg-gray-50 dark:bg-gray-900 border-t border-border">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-12">{t("contact.title")}</h2>
-        
-        <div className="max-w-lg mx-auto">
+
+        <div className="max-w-lg mx-auto bg-background rounded-lg shadow-lg p-8">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <FormField
