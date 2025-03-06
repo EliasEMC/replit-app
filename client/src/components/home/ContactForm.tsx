@@ -42,13 +42,36 @@ export default function ContactForm() {
     mode: "onChange", // Enable real-time validation
   });
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    toast({
-      title: "Form submitted!",
-      description: "We'll get back to you soon.",
-      duration: 3000,
-    });
-    console.log(data);
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to send message");
+      }
+
+      toast({
+        title: "Success!",
+        description: "Your message has been sent. We'll get back to you soon.",
+        duration: 3000,
+      });
+
+      form.reset();
+    } catch (error) {
+      console.error("Contact form error:", error);
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again later.",
+        variant: "destructive",
+        duration: 5000,
+      });
+    }
   };
 
   return (
