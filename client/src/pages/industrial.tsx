@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import PropertyMap from "@/components/maps/PropertyMap";
 import { Button } from "@/components/ui/button";
 
 const industrialFeatures = [
@@ -34,7 +35,7 @@ export default function Industrial() {
     >
       <Header />
       <Navbar />
-      
+
       <main>
         {/* Hero Section */}
         <div className="relative h-[400px] bg-slate-900">
@@ -54,6 +55,14 @@ export default function Industrial() {
                 Soluciones inmobiliarias para su negocio
               </p>
             </div>
+          </div>
+        </div>
+
+        {/* Map Section */}
+        <div className="py-16 bg-white dark:bg-gray-900">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold mb-8 text-center">Nuestras Ubicaciones</h2>
+            <PropertyMap />
           </div>
         </div>
 
@@ -97,7 +106,7 @@ export default function Industrial() {
           </div>
         </div>
       </main>
-      
+
       <Footer />
     </motion.div>
   );
