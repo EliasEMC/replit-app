@@ -1,31 +1,37 @@
+import { useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import PropertyMap from "@/components/maps/PropertyMap";
-import { Button } from "@/components/ui/button";
-
-const industrialFeatures = [
-  {
-    title: "Espacios Industriales",
-    description: "Naves industriales y almacenes diseñados para maximizar la eficiencia operativa.",
-    image: "https://images.unsplash.com/photo-1513828583688-c52646f9b5d9"
-  },
-  {
-    title: "Centros Comerciales",
-    description: "Espacios comerciales modernos con alta afluencia y ubicaciones estratégicas.",
-    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8"
-  },
-  {
-    title: "Parques Industriales",
-    description: "Desarrollos integrales con infraestructura de primer nivel y conectividad.",
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab"
-  }
-];
+import PropertyFilters from "@/components/properties/PropertyFilters";
+import PropertyCard from "@/components/properties/PropertyCard";
+import { sampleProperties } from "@/lib/data/properties";
+import type { Property, PropertyFilters as PropertyFiltersType } from "@/lib/types/property";
 
 export default function Industrial() {
   const { t } = useTranslation();
+  const [filters, setFilters] = useState<PropertyFiltersType>({
+    type: 'industrial',
+    listingType: 'sale',
+    location: '',
+    propertySubtype: '',
+    priceRange: { min: 0, max: 999999999 },
+    surfaceRange: { min: 0, max: 999999 }
+  });
+
+  const filteredProperties = useMemo(() => {
+    return sampleProperties.filter(property => {
+      if (property.type !== 'industrial') return false;
+      if (filters.listingType && property.listingType !== filters.listingType) return false;
+      if (filters.location && property.state !== filters.location) return false;
+      if (filters.propertySubtype && property.propertySubtype !== filters.propertySubtype) return false;
+      if (property.price < filters.priceRange.min || property.price > filters.priceRange.max) return false;
+      if (property.surface < filters.surfaceRange.min || property.surface > filters.surfaceRange.max) return false;
+      return true;
+    });
+  }, [filters]);
 
   return (
     <motion.div
@@ -66,43 +72,29 @@ export default function Industrial() {
           </div>
         </div>
 
-        {/* Features Grid */}
-        <div className="py-24 bg-white dark:bg-gray-900">
+        {/* Properties Section */}
+        <div className="py-16 bg-white dark:bg-gray-900">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {industrialFeatures.map((feature, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.2 }}
-                  viewport={{ once: true }}
-                  className="bg-slate-50 dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg"
-                >
-                  <div
-                    className="h-48 bg-cover bg-center"
-                    style={{ backgroundImage: `url(${feature.image})` }}
-                  />
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                    <p className="text-gray-600 dark:text-gray-300">{feature.description}</p>
-                  </div>
-                </motion.div>
+            <h2 className="text-3xl font-bold mb-8 text-center">Propiedades Industriales</h2>
+
+            <PropertyFilters
+              propertyType="industrial"
+              onFilterChange={setFilters}
+            />
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredProperties.map((property) => (
+                <PropertyCard key={property.id} property={property} />
               ))}
             </div>
-          </div>
-        </div>
 
-        {/* CTA Section */}
-        <div className="py-16 bg-slate-100 dark:bg-gray-800">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold mb-8">¿Interesado en nuestras soluciones?</h2>
-            <Button
-              size="lg"
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              Contáctenos
-            </Button>
+            {filteredProperties.length === 0 && (
+              <div className="text-center py-8">
+                <p className="text-lg text-gray-600 dark:text-gray-300">
+                  No se encontraron propiedades con los filtros seleccionados.
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </main>
