@@ -43,11 +43,11 @@ export default function ContactForm() {
   };
 
   return (
-    <div id="contact" className="py-24 bg-gray-50 dark:bg-gray-900 border-t border-border">
+    <div id="contact" className="py-24 bg-slate-100 dark:bg-slate-800 border-t border-border">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-12">{t("contact.title")}</h2>
 
-        <div className="max-w-lg mx-auto bg-background rounded-lg shadow-lg p-8">
+        <div className="max-w-lg mx-auto bg-white dark:bg-gray-900 rounded-lg shadow-xl p-8">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <FormField
