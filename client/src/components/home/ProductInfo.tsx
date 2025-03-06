@@ -41,7 +41,7 @@ export default function ProductInfo() {
   const product = products[currentProduct];
 
   return (
-    <div id="industrial" className="py-20 bg-background border-t border-b border-border">
+    <div id="industrial" className="py-20 bg-white dark:bg-gray-900 border-t border-b border-border">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <motion.div
@@ -54,7 +54,7 @@ export default function ProductInfo() {
             <img
               src={product.image}
               alt={t(product.title)}
-              className="rounded-lg shadow-lg object-cover h-[400px] w-full"
+              className="rounded-lg shadow-xl object-cover h-[400px] w-full"
             />
           </motion.div>
 
@@ -64,9 +64,10 @@ export default function ProductInfo() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
+            className="bg-slate-50 dark:bg-gray-800 p-8 rounded-lg shadow-lg"
           >
             <h2 className="text-3xl font-bold mb-6">{t(product.title)}</h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
+            <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
               {product.description}
             </p>
             <ul className="space-y-4 mb-8">

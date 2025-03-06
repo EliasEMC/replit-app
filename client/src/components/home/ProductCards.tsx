@@ -29,7 +29,7 @@ export default function ProductCards() {
   const { t } = useTranslation();
 
   return (
-    <div id="products" className="py-24 bg-gray-50 dark:bg-gray-900 border-t border-border">
+    <div id="products" className="py-24 bg-slate-50 dark:bg-gray-900 border-t border-border">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-12">{t("products.properties")}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -41,7 +41,7 @@ export default function ProductCards() {
               transition={{ delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <Card className="overflow-hidden hover:shadow-lg transition-shadow h-full">
+              <Card className="overflow-hidden hover:shadow-xl transition-shadow h-full bg-white dark:bg-gray-800">
                 <div
                   className="h-48 bg-cover bg-center"
                   style={{ backgroundImage: `url(${product.image})` }}
