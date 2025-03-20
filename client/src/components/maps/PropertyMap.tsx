@@ -1,7 +1,8 @@
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import { Icon } from 'leaflet';
-import { useTranslation } from "react-i18next";
+import 'leaflet/dist/leaflet.css';
 
 // Fix for default marker icon in react-leaflet
 const icon = new Icon({
@@ -10,62 +11,85 @@ const icon = new Icon({
   iconAnchor: [12, 41]
 });
 
-// Sample property locations
-const properties = [
-  {
-    id: 1,
-    name: "Industrial Park Alpha",
-    position: [19.4326, -99.1332], // Mexico City coordinates
-    type: "industrial",
-    description: "Modern industrial complex with excellent connectivity"
-  },
-  {
-    id: 2,
-    name: "Commercial Center Beta",
-    position: [19.4361, -99.1375],
-    type: "commercial",
-    description: "Prime location commercial space in business district"
-  },
-  {
-    id: 3,
-    name: "Logistics Hub Gamma",
-    position: [19.4275, -99.1276],
-    type: "industrial",
-    description: "Strategic logistics center with highway access"
-  }
-];
+interface Property {
+  id: number;
+  name: string;
+  latitude: number;
+  longitude: number;
+  type: string;
+  description: string;
+}
 
-export default function PropertyMap() {
+interface PropertyMapProps {
+  onLocationSelect?: (lat: number, lng: number) => void;
+  initialProperties?: Property[];
+  initialLocation?: { lat: number; lng: number } | null;
+}
+
+// Componente para manejar eventos del mapa
+function LocationMarker({ onLocationSelect }: { onLocationSelect: (lat: number, lng: number) => void }) {
+  useMapEvents({
+    click(e) {
+      const { lat, lng } = e.latlng;
+      onLocationSelect(lat, lng);
+    },
+  });
+  return null;
+}
+
+export default function PropertyMap({ 
+  onLocationSelect, 
+  initialProperties = [],
+  initialLocation
+}: PropertyMapProps) {
   const { t } = useTranslation();
-  
+  const center: [number, number] = initialLocation 
+    ? [initialLocation.lat, initialLocation.lng]
+    : [19.4326, -99.1332]; // Mexico City por defecto
+
   return (
-    <div className="w-full h-[400px] rounded-lg overflow-hidden shadow-lg">
-      <MapContainer 
-        center={[19.4326, -99.1332]} // Centered on Mexico City
-        zoom={13} 
-        scrollWheelZoom={true}
-        className="w-full h-full"
-      >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        {properties.map((property) => (
-          <Marker 
-            key={property.id} 
-            position={property.position as [number, number]}
-            icon={icon}
-          >
-            <Popup>
-              <div className="p-2">
-                <h3 className="font-bold text-lg">{property.name}</h3>
-                <p className="text-sm text-gray-600 capitalize">{property.type}</p>
-                <p className="mt-2">{property.description}</p>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
-      </MapContainer>
-    </div>
+    <MapContainer 
+      center={center}
+      zoom={13}
+      scrollWheelZoom={true}
+      className="w-full h-full"
+    >
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      
+      {/* Marcador de ubicación seleccionada */}
+      {initialLocation && (
+        <Marker 
+          position={[initialLocation.lat, initialLocation.lng]}
+          icon={icon}
+        >
+          <Popup>
+            {t('properties.form.selected_location')}
+          </Popup>
+        </Marker>
+      )}
+
+      {/* Marcadores de propiedades existentes */}
+      {initialProperties.map((property) => (
+        <Marker
+          key={property.id}
+          position={[property.latitude, property.longitude]}
+          icon={icon}
+        >
+          <Popup>
+            <div className="p-2">
+              <h3 className="font-bold text-lg">{property.name}</h3>
+              <p className="text-sm text-gray-600 capitalize">{property.type}</p>
+              <p className="mt-2">{property.description}</p>
+            </div>
+          </Popup>
+        </Marker>
+      ))}
+
+      {/* Componente para manejar clicks en el mapa */}
+      {onLocationSelect && <LocationMarker onLocationSelect={onLocationSelect} />}
+    </MapContainer>
   );
 }
